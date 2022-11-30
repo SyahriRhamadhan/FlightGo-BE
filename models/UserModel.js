@@ -10,6 +10,10 @@ const Users = db.define('users',{
     email:{
         type: DataTypes.STRING
     },
+    image_user:{
+        type: DataTypes.STRING,
+        defaultValue: "https://res.cloudinary.com/duwoisvla/image/upload/v1669719046/photo1669719020_jtqxri.jpg"
+    },
     password:{
         type: DataTypes.STRING
     },

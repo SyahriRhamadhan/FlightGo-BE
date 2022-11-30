@@ -2,12 +2,23 @@ import Users from "../models/UserModel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 // import res from "express/lib/response";
- 
+
+export const getRoot = async(req, res) => {
+  res.status(200).json({
+    status: "OK",
+    message: "FlightGo API is up and running!",
+  });
+}
 export const getUsers = async(req, res) => {
-  
+    if(req.user.role !== "admin") {
+      return res.status(400).json({
+          success: false,
+          message: "Kamu gak bisa mengakses ini dengan role member",
+      });
+    }
     try {
         const users = await Users.findAll({
-            attributes:['id','name','email', 'role','phone','address','visa','passport','izin','createdAt','updatedAt']
+            attributes:['id','image_user','name','email', 'role','phone','address','visa','passport','izin','createdAt','updatedAt']
         });
         res.json(users);
     } catch (error) {
@@ -47,10 +58,11 @@ export const Login = async(req, res) => {
         const role = user[0].role;
         const phone = user[0].phone;
         const address = user[0].address;
-        const accessToken = jwt.sign({userId, name, email, role, phone, address}, process.env.ACCESS_TOKEN_SECRET,{
+        const image_user = user[0].image_user;
+        const accessToken = jwt.sign({userId, name, email, role, phone, address, image_user}, process.env.ACCESS_TOKEN_SECRET,{
             expiresIn: '1d'
         });
-        const refreshToken = jwt.sign({userId, name, email, role, phone, address}, process.env.REFRESH_TOKEN_SECRET,{
+        const refreshToken = jwt.sign({userId, name, email, role, phone, address, image_user}, process.env.REFRESH_TOKEN_SECRET,{
             expiresIn: '183d'
         });
         await Users.update({refresh_token: refreshToken},{
@@ -106,7 +118,7 @@ export const Update = async(req, res,next) => {
         id: req.params.id
     }
   });
-  const {name, phone, address,visa,passport,izin} = req.body;
+  const {name, phone, address,visa,passport,izin,image_user} = req.body;
     try {
       await Users.update({
         name: name,
@@ -115,6 +127,7 @@ export const Update = async(req, res,next) => {
         visa: visa,
         passport: passport,
         izin: izin,
+        image_user: image_user,
     },{
         where:{
             id: users.id
