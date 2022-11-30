@@ -15,6 +15,9 @@ module.exports = {
       email: {
         type: Sequelize.STRING
       },
+      image_user:{
+        type: Sequelize.STRING
+      },
       password: {
         type: Sequelize.STRING
       },
@@ -26,19 +29,19 @@ module.exports = {
       },
       phone:{
         type: Sequelize.INTEGER
-    },
-    address:{
-        type: Sequelize.TEXT
-    },
-    visa:{
-        type: Sequelize.STRING
-    },
-    passport:{
-        type: Sequelize.STRING
-    },
-    izin:{
-        type: Sequelize.STRING
-    },
+      },
+      address:{
+          type: Sequelize.TEXT
+      },
+      visa:{
+          type: Sequelize.STRING
+      },
+      passport:{
+          type: Sequelize.STRING
+      },
+      izin:{
+          type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
