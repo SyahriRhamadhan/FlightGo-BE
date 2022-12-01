@@ -5,6 +5,12 @@ import db from "../config/Database.js";
 const { DataTypes } = Sequelize;
  
 const product = db.define('product',{
+    id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER
+      },
     jenis_penerbangan: DataTypes.STRING,
     bentuk_penerbangan: DataTypes.STRING,
     kota_asal: DataTypes.STRING,
