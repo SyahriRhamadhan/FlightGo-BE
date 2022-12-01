@@ -12,6 +12,7 @@ const transaction = db.define('transaction',{
         type: DataTypes.INTEGER
     },
     bukti_Pembayaran: DataTypes.STRING,
+    status : DataTypes.STRING,
     productId:{
         type: DataTypes.INTEGER,
     },

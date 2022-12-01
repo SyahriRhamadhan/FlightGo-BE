@@ -3,7 +3,7 @@ import { getRoot, getUsers,Register, Login, Logout, Whoami, Update } from "../co
 import { verifyToken  } from "../middleware/VerifyToken.js";
 import { refreshToken } from "../controllers/RefreshToken.js";
 import {getproduct, getproductById, createproduct, updateproduct, deleteproduct} from"../controllers/Product.js"
-import {cereateTransaction} from "../controllers/Transaction.js"
+import {cereateTransaction, accept, reject, getTransactionByID, getTransactions} from "../controllers/Transaction.js"
 const router = express.Router();
 const prefix = "/v1/api/";
 //root
@@ -28,7 +28,11 @@ router.put(prefix + 'ticket/:id', verifyToken, updateproduct);
 router.delete(prefix + 'ticket/:id', verifyToken, deleteproduct);
 
 //transaction
-router.post(prefix + 'ticket/transaction', verifyToken, cereateTransaction);
+router.post(prefix + 'ticket/transaction/:id', verifyToken, cereateTransaction);
+router.put(prefix + 'ticket/transaction/accept/:id',verifyToken, accept)
+router.put(prefix + 'ticket/transaction/reject/:id', verifyToken, reject)
+router.get(prefix + 'ticket/transaction/data', verifyToken, getTransactions)
+router.get(prefix + 'ticket/transaction/data/:id', verifyToken, getTransactionByID)
 
 
 

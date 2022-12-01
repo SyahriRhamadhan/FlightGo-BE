@@ -109,7 +109,7 @@ export const Update = async(req, res,next) => {
   if (!compareId ) {
     res.status(401).json({
       status: "FAIL",
-      message: "User who can edit or delete user data is him/herself."
+      message: "Ini bukan akun kamu"
     });
     return;
   }
