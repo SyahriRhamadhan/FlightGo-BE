@@ -1,5 +1,6 @@
 import transaction from "../models/TransactionModel.js";
 import product from "../models/ProductModel.js";
+import Users from "../models/UserModel.js";
 
 export const cereateTransaction = async(req, res) => {
     try {
@@ -13,6 +14,9 @@ export const cereateTransaction = async(req, res) => {
                 productId: req.params.id,
                 userId: req.user.userId,
                 bukti_Pembayaran: req.body.bukti_Pembayaran,
+                userVisa: req.user.visa,
+                userPassport: req.user.passport,
+                userIzin: req.user.izin,
                 status: "menunggu",
             })
             res.status(201).send({
@@ -47,7 +51,7 @@ export const accept = async(req, res) => {
     })
     res.status(201).send({
         status: 201,
-        message: 'Penawaran Diterima!',
+        message: 'Pesanan Diterima!',
         data: accept
     })
    } catch (error) {
@@ -76,7 +80,7 @@ export const reject = async(req, res) => {
      })
      res.status(201).send({
          status: 201,
-         message: 'Penawaran Ditolak!',
+         message: 'Pesanan Ditolak!',
          data: reject
      })
     } catch (error) {
@@ -85,6 +89,28 @@ export const reject = async(req, res) => {
          message: error.message,
      })
     }
+ }
+ export const checkIn = async (req, res) => {
+    try {
+        const check = await transaction.findOne({
+            where: {
+                id: req.params.id,
+            }
+        })
+        const checkIn = await check.update({
+            checkIn: req.body.checkIn,
+        })
+        res.status(201).send({
+            status: 201,
+            message: 'Berhasil check in',
+            data: checkIn
+        })
+       } catch (error) {
+        res.status(400).send({
+            status: "FAIL",
+            message: error.message,
+        })
+       }
  }
  export const getTransactions = async (req, res) => {
     if(req.user.role !== "admin") {
@@ -120,6 +146,28 @@ export const reject = async(req, res) => {
             status: 201,
             data: sourceTransaction
         })
+    } catch (error) {
+        res.status(400).send({
+            status: "FAIL",
+            message: error.message,
+        })
+    }
+}
+export const memberHistory = async (req, res) => {
+    try {
+        const memberHistory = await transaction.findAll({
+            where: {
+                userId: req.user.userId,
+                status: "Pesanan Diterima",
+            },
+            include: {
+                model: product
+            }
+        })
+        res.status(200).json({
+            message: "Success",
+            memberHistory,
+        });
     } catch (error) {
         res.status(400).send({
             status: "FAIL",

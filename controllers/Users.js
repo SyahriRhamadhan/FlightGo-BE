@@ -59,10 +59,13 @@ export const Login = async(req, res) => {
         const phone = user[0].phone;
         const address = user[0].address;
         const image_user = user[0].image_user;
-        const accessToken = jwt.sign({userId, name, email, role, phone, address, image_user}, process.env.ACCESS_TOKEN_SECRET,{
+        const visa = user[0].visa;
+        const passport = user[0].passport;
+        const izin = user[0].izin;
+        const accessToken = jwt.sign({userId, name, email, role, phone, address, image_user, visa, passport,izin}, process.env.ACCESS_TOKEN_SECRET,{
             expiresIn: '1d'
         });
-        const refreshToken = jwt.sign({userId, name, email, role, phone, address, image_user}, process.env.REFRESH_TOKEN_SECRET,{
+        const refreshToken = jwt.sign({userId, name, email, role, phone, address, image_user,visa, passport,izin}, process.env.REFRESH_TOKEN_SECRET,{
             expiresIn: '183d'
         });
         await Users.update({refresh_token: refreshToken},{

@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import { decode } from "jsonwebtoken";
 import { createError } from "./error.js";
-// import User from "../models/UserModel"
+
 export const verifyToken = (req, res, next) => {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
@@ -25,14 +25,6 @@ export const verifyToken = (req, res, next) => {
     next();
     })
 }
-// export const verifyUser = (req, res, next) => {
-//     verifyToken(req, res, next, () => {
-//         if (req.user.id === req.params.id) {
-//           next();
-//         } else {
-//           return next(createError(403, "You are not authorized!"));
-//         }
-//       });
-// }
+
 
 
