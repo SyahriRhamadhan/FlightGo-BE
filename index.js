@@ -11,7 +11,7 @@ app.use(cors({ credentials:true, origin:'http://localhost:3000' }));
 app.use(cookieParser());
 app.use(express.json());
 app.use(router);
-// (async () => {
-//     await db.sync();
-// })();
-app.listen(5000, ()=> console.log('http://localhost:5000'));
+(async () => {
+    await db.sync();
+})();
+app.listen(process.env.PORT, ()=> console.log(`server is running`))
