@@ -11,12 +11,14 @@
     "username": "root",
     "password": "",
     "database": "database_test",
+    "port": "7357",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "production": {
     "username": "root",
     "password": "",
+    "port": "7357",
     "database": "database_production",
     "host": "127.0.0.1",
     "dialect": "mysql"
