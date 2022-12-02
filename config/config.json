@@ -8,16 +8,16 @@
   },
   "test": {
     "username": "root",
-    "password": "tvUJldyBIxNjbUE8RFmg",
-    "database": "railway",
-    "host": "containers-us-west-76.railway.app",
+    "password": "",
+    "database": "database_test",
+    "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "production": {
     "username": "root",
-    "password": "tvUJldyBIxNjbUE8RFmg",
-    "database": "railway",
-    "host": "containers-us-west-76.railway.app",
+    "password": "",
+    "database": "database_production",
+    "host": "127.0.0.1",
     "dialect": "mysql"
   }
 }
