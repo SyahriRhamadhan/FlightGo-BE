@@ -19,7 +19,7 @@ const Users = db.define('users',{
     password: DataTypes.STRING,
     role:  DataTypes.STRING,
     refresh_token: DataTypes.TEXT,
-    phone: DataTypes.INTEGER,
+    phone: DataTypes.STRING,
     address: DataTypes.TEXT,
     visa: DataTypes.STRING,
     passport: DataTypes.STRING,
