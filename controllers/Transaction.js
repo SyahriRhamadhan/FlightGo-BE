@@ -92,12 +92,18 @@ export const reject = async(req, res) => {
  }
  export const checkIn = async (req, res) => {
     try {
-        const check = await transaction.findOne({
+        // const check = await transaction.findOne({
+        //     where: {
+        //         id: req.params.id,
+        //     }
+        // })
+        const sourceWishlist = await transaction.findOne({
             where: {
+                userId: req.user.userId,
                 id: req.params.id,
             }
         })
-        const checkIn = await check.update({
+        const checkIn = await sourceWishlist.update({
             checkIn: req.body.checkIn,
         })
         res.status(201).send({
