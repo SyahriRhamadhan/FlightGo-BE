@@ -18,7 +18,7 @@ router.delete(prefix +'logout', Logout);//logout
 //user
 router.get(prefix + 'token', refreshToken);
 router.get(prefix + 'users', verifyToken, getUsers);
-router.put(prefix + 'users/:id',verifyToken,Update);
+router.put(prefix + 'users',verifyToken,Update);
 router.get(prefix + 'current-user',verifyToken, Whoami)
 
 //product
