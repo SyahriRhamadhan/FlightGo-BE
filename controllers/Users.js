@@ -112,18 +112,18 @@ export const Whoami = async (req, res) => {
 
 //update user
 export const Update = async(req, res,next) => {
-  const id = req.params.id
-  const compareId = req.user.userId== id;
-  if (!compareId ) {
-    res.status(401).json({
-      status: "FAIL",
-      message: "Ini bukan akun kamu"
-    });
-    return;
-  }
+  // const id = req.params.id
+  // const compareId = req.user.userId== id;
+  // if (!compareId ) {
+  //   res.status(401).json({
+  //     status: "FAIL",
+  //     message: "Ini bukan akun kamu"
+  //   });
+  //   return;
+  // }
   const users = await Users.findOne({
     where: {
-        id: req.params.id
+        id: req.user.userId
     }
   });
   const {name, phone, address,visa,passport,izin,image_user} = req.body;
