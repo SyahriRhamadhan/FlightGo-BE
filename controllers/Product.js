@@ -80,7 +80,7 @@ export const updateproduct = async(req, res) => {
         });
     }
     if(req.files === null){
-        fileName = product.image_product_id;
+        fileName = product.image_product;
     }else {
         const file = req.files.image_product;
         const fileSize = file.data.length;
