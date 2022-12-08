@@ -143,12 +143,12 @@ export const Update = async(req, res,next) => {
     const fileVisa = req.files.visa;
     const filePassport = req.files.passport;
     const fileIzin = req.files.izin;
-    if(!file || !fileVisa || !filePassport || !fileIzin){
-      return res.status(400).json({
-        success: false,
-        message: "image_user, visa, passport, izin is required",
-      });
-    }
+    // if(!file || !fileVisa || !filePassport || !fileIzin){
+    //   return res.status(400).json({
+    //     success: false,
+    //     message: "image_user, visa, passport, izin is required",
+    //   });
+    // }
 
     const fileSize = file.data.length;
     const fileSizeVisa = fileVisa.data.length;
