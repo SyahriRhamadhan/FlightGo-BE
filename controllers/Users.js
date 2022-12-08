@@ -1,6 +1,8 @@
 import Users from "../models/UserModel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import path from "path";
+import fs from "fs";
 // import res from "express/lib/response";
 
 export const getRoot = async(req, res) => {
@@ -16,16 +18,16 @@ export const getUsers = async(req, res) => {
           message: "Kamu gak bisa mengakses ini dengan role member",
       });
     }
-    try {
-        const users = await Users.findAll({
-            attributes:['id','image_user','name','email', 'role','phone','address','visa','passport','izin','createdAt','updatedAt']
-        });
-        res.json(users);
-    } catch (error) {
-        console.log(error);
-    }
+  try {
+    const users = await Users.findAll({
+      attributes:['id','image_user','name','email', 'role','phone','address','visa','passport','izin','createdAt','updatedAt']
+    });
+    res.json(users);
+  } catch (error) {
+  console.log(error);
+  }
 }
- 
+
 export const Register = async(req, res) => {
     const { email,name, password } = req.body;
     const salt = await bcrypt.genSalt();
@@ -126,26 +128,88 @@ export const Update = async(req, res,next) => {
         id: req.user.userId
     }
   });
-  const {name, phone, address,visa,passport,izin,image_user} = req.body;
-    try {
-      await Users.update({
-        name: name,
-        phone: phone,
-        address: address,
-        visa: visa,
-        passport: passport,
-        izin: izin,
-        image_user: image_user,
-    },{
-        where:{
-            id: users.id
-        }
-        
+  const {name, phone, address} = req.body;
+  let fileName = "";
+  let fileNameVisa = "";
+  let fileNamePassport = "";
+  let fileNameIzin = "";
+  if(req.file === null){
+    fileName = Users.image_user;
+    fileNameVisa = req.user.visa;
+    fileNamePassport = req.user.passport;
+    fileNameIzin = req.user.izin;
+  }else{
+    const file = req.files.image_user;
+    const fileVisa = req.files.visa;
+    const filePassport = req.files.passport;
+    const fileIzin = req.files.izin;
+    if(!file || !fileVisa || !filePassport || !fileIzin){
+      return res.status(400).json({
+        success: false,
+        message: "image_user, visa, passport, izin is required",
+      });
+    }
+
+    const fileSize = file.data.length;
+    const fileSizeVisa = fileVisa.data.length;
+    const fileSizePassport = filePassport.data.length;
+    const fileSizeIzin = fileIzin.data.length;
+    
+    const ext = path.extname(file.name);
+    const extVisa = path.extname(fileVisa.name);
+    const extPassport = path.extname(filePassport.name);
+    const extIzin = path.extname(fileIzin.name);
+
+    fileName = file.md5 + ext;
+    fileNameVisa = fileVisa.md5 + extVisa;
+    fileNamePassport = filePassport.md5 + extPassport;
+    fileNameIzin = fileIzin.md5 + extIzin;
+
+    const allowedType = ['.png','.jpg','.jpeg'];
+
+    if(!allowedType.includes(ext.toLowerCase())) return res.status(422).json({msg: "Invalid Images"});
+    if(!allowedType.includes(extVisa.toLowerCase())) return res.status(422).json({msg: "Invalid Images"});
+    if(!allowedType.includes(extPassport.toLowerCase())) return res.status(422).json({msg: "Invalid Images"});
+    if(!allowedType.includes(extIzin.toLowerCase())) return res.status(422).json({msg: "Invalid Images"});
+
+    if(fileSize > 1000000 || fileSizeVisa > 1000000 || fileSizePassport > 1000000 || fileSizeIzin > 1000000) return res.status(422).json({msg: "Image must be less than 1 MB"});
+
+    file.mv(`./public/images/${fileName}`, (err)=>{
+        if(err) return res.status(500).json({msg: err.message});
     });
-    res.status(200).json({msg: "User Updated"});
-    } catch (error) {
-      console.log(error);
-    }return next;
+    fileVisa.mv(`./public/images/${fileNameVisa}`, (err)=>{
+      if(err) return res.status(500).json({msg: err.message});
+    });
+    filePassport.mv(`./public/images/${fileNamePassport}`, (err)=>{
+      if(err) return res.status(500).json({msg: err.message});
+    });
+    fileIzin.mv(`./public/images/${fileNameIzin}`, (err)=>{
+      if(err) return res.status(500).json({msg: err.message});
+    });
+  }
+  const url = `${req.protocol}://${req.get("host")}/images/${fileName}`;
+  const urlVisa = `${req.protocol}://${req.get("host")}/images/${fileNameVisa}`;
+  const urlPassport = `${req.protocol}://${req.get("host")}/images/${fileNamePassport}`;
+  const urlIzin = `${req.protocol}://${req.get("host")}/images/${fileNameIzin}`;
+  try {
+    await Users.update({
+      name: name,
+      phone: phone,
+      address: address,
+      visa: urlVisa,
+      passport: urlPassport,
+      izin: urlIzin,
+      image_user: url,
+  },{
+      where:{
+          id: users.id
+      }
+      
+  });
+  res.status(200).json({msg: "User Updated"});
+  } catch (error) {
+    console.log(error);
+  }return next;
 
 }
 
