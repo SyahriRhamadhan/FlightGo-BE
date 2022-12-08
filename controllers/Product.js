@@ -79,7 +79,7 @@ export const updateproduct = async(req, res) => {
             message: "Kamu gak bisa update data product dengan role member",
         });
     }
-    if(req.files.image_product === null){
+    if(req.files === ""){
         fileName = product.image_product;
     }else {
         const file = req.files.image_product;
