@@ -16,7 +16,7 @@ export const cereateTransaction = async(req, res) => {
             const file = req.files.bukti_Pembayaran;
             const fileSize = file.data.length;
             const ext = path.extname(file.name);
-            const fileName = file.md5 + ext;
+            const fileName = file.md5 +req.user.name+ ext;
             const url = `${req.protocol}://${req.get("host")}/images/${fileName}`;
             const allowedType = ['.png','.jpg','.jpeg'];
 

@@ -38,7 +38,7 @@ export const createproduct = async(req, res) => {
     const file = req.files.image_product;
     const fileSize = file.data.length;
     const ext = path.extname(file.name);
-    const fileName = file.md5 + ext;
+    const fileName = file.md5 +req.user.name+ ext;
     const url = `${req.protocol}://${req.get("host")}/images/${fileName}`;
     const allowedType = ['.png','.jpg','.jpeg'];
 
@@ -84,7 +84,7 @@ export const updateproduct = async(req, res) => {
         const file = req.files.image_product;
         const fileSize = file.data.length;
         const ext = path.extname(file.name);
-        fileName = file.md5 + ext;
+        fileName = file.md5 +req.user.name+ ext;
         const allowedType = ['.png','.jpg','.jpeg'];
 
         if(!allowedType.includes(ext.toLowerCase())) return res.status(422).json({msg: "Invalid Images"});
