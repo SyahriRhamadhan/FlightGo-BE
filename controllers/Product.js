@@ -34,6 +34,7 @@ export const createproduct = async(req, res) => {
             message: "Kamu gak bisa nambah tiket dengan role member",
         });
     }
+    if(req.files === null) return res.status(400).json({msg: "No File Uploaded"});
     const { jenis_penerbangan,bentuk_penerbangan,kota_asal,bandara_asal,kota_tujuan,bandara_tujuan,depature_date,depature_time,kode_negara_asal, kode_negara_tujuan,price,kota_asal_,bandara_asal_,kota_tujuan_,bandara_tujuan_,depature_date_,depature_time_,kode_negara_asal_,kode_negara_tujuan_,price_,total_price,desctiption} = req.body;
     const file = req.files.image_product;
     const fileSize = file.data.length;
@@ -61,6 +62,7 @@ export const createproduct = async(req, res) => {
 }
 
 export const updateproduct = async(req, res) => {
+    if(req.files === null) return res.status(400).json({msg: "No File Uploaded"});
     const { id } = req.params;
     const Product = await product.findOne({
         where: { id: id },
@@ -79,7 +81,7 @@ export const updateproduct = async(req, res) => {
             message: "Kamu gak bisa update data product dengan role member",
         });
     }
-    if(req.files === ""){
+    if(req.files === null){
         fileName = product.image_product;
     }else {
         const file = req.files.image_product;

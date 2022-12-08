@@ -123,6 +123,7 @@ export const Update = async(req, res,next) => {
   //   });
   //   return;
   // }
+  if(req.files === null) return res.status(400).json({msg: "No File Uploaded"});
   const users = await Users.findOne({
     where: {
         id: req.user.userId
