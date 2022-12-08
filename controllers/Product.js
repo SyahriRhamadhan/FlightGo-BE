@@ -99,7 +99,7 @@ export const updateproduct = async(req, res) => {
     }
     const url = `${req.protocol}://${req.get("host")}/images/${fileName}`;
     try {
-        await product.update({ jenis_penerbangan: jenis_penerbangan,bentuk_penerbangan: bentuk_penerbangan,kota_asal: kota_asal,bandara_asal: bandara_asal,kota_tujuan: kota_tujuan,bandara_tujuan: bandara_tujuan,depature_date: depature_date, depature_time: depature_time,kode_negara_asal: kode_negara_asal, kode_negara_tujuan: kode_negara_tujuan,price: price,kota_asal_: kota_asal_,bandara_asal_: bandara_asal_,kota_tujuan_: kota_tujuan_,bandara_tujuan_: bandara_tujuan_,depature_date_: depature_date_,depature_time_: depature_time_,kode_negara_asal_: kode_negara_asal_,kode_negara_tujuan_: kode_negara_tujuan_,price_,total_price: total_price,image_product: url,image_product_id: fileName,desctiption: desctiption},
+        await product.update({ jenis_penerbangan: jenis_penerbangan,bentuk_penerbangan: bentuk_penerbangan,kota_asal: kota_asal,bandara_asal: bandara_asal,kota_tujuan: kota_tujuan,bandara_tujuan: bandara_tujuan,depature_date: depature_date, depature_time: depature_time,kode_negara_asal: kode_negara_asal, kode_negara_tujuan: kode_negara_tujuan,price: price,kota_asal_: kota_asal_,bandara_asal_: bandara_asal_,kota_tujuan_: kota_tujuan_,bandara_tujuan_: bandara_tujuan_,depature_date_: depature_date_,depature_time_: depature_time_,kode_negara_asal_: kode_negara_asal_,kode_negara_tujuan_: kode_negara_tujuan_,price_:price_,total_price: total_price,image_product: url,image_product_id: fileName,desctiption: desctiption},
         {
             where: { id: id},
         });
