@@ -134,7 +134,7 @@ export const Update = async(req, res,next) => {
   let fileNamePassport = "";
   let fileNameIzin = "";
   if(req.file === null){
-    fileName = Users.image_user;
+    fileName = req.user.image_user;
     fileNameVisa = req.user.visa;
     fileNamePassport = req.user.passport;
     fileNameIzin = req.user.izin;
