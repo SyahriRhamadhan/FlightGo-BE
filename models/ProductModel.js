@@ -37,6 +37,7 @@ const product = db.define('product',{
         type: DataTypes.STRING,
         defaultValue: "https://res.cloudinary.com/duwoisvla/image/upload/v1669719046/photo1669719020_jtqxri.jpg"
     },
+    image_product_id: DataTypes.STRING,
     desctiption: DataTypes.TEXT,
     createdAt: {
         allowNull: false,
