@@ -160,10 +160,12 @@ export const Update = async(req, res,next) => {
     const extPassport = path.extname(filePassport.name);
     const extIzin = path.extname(fileIzin.name);
 
-    fileName = file.md5 +req.user.name+ ext;
-    fileNameVisa = fileVisa.md5+req.user.name + extVisa;
-    fileNamePassport = filePassport.md5+req.user.name + extPassport;
-    fileNameIzin = fileIzin.md5+req.user.name+ extIzin;
+    const rand =Math.random()*10+1+"wr" 
+
+    fileName = file.md5 +rand+ ext;
+    fileNameVisa = fileVisa.md5+rand + extVisa;
+    fileNamePassport = filePassport.md5+rand + extPassport;
+    fileNameIzin = fileIzin.md5+rand+ extIzin;
 
     const allowedType = ['.png','.jpg','.jpeg'];
 
