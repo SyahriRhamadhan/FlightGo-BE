@@ -12,7 +12,7 @@ export const cereateTransaction = async(req, res) => {
                 message: "Kamu adalah admin tidak bisa transaksi",
             });
         }else{
-            if(req.files === null) return res.status(400).json({msg: "No File Uploaded"});
+            if(req.files === null) return res.status(400).json({message: "No File Uploaded"});
             const file = req.files.bukti_Pembayaran;
             const fileSize = file.data.length;
             const ext = path.extname(file.name);
@@ -21,11 +21,11 @@ export const cereateTransaction = async(req, res) => {
             const url = `${req.protocol}://${req.get("host")}/images/${fileName}`;
             const allowedType = ['.png','.jpg','.jpeg'];
 
-            if(!allowedType.includes(ext.toLowerCase())) return res.status(422).json({msg: "Invalid Images"});
-            if(fileSize > 5000000) return res.status(422).json({msg: "Image must be less than 5 MB"});
+            if(!allowedType.includes(ext.toLowerCase())) return res.status(422).json({message: "Invalid Images"});
+            if(fileSize > 5000000) return res.status(422).json({message: "Image must be less than 5 MB"});
 
             file.mv(`./public/images/${fileName}`, async(err)=>{
-                if(err) return res.status(500).json({msg: err.message});
+                if(err) return res.status(500).json({message: err.message});
                 const Transaction = await transaction.create({
                     productId: req.params.id,
                     userId: req.user.userId,

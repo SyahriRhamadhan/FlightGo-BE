@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(FileUpload());
 app.use(express.static("public"));
 app.use(router);
-(async () => {
-    await db.sync();
-})();
-app.listen(process.env.PORT, ()=> console.log(`server is running`))
+// (async () => {
+//     await db.sync();
+// })();
+app.listen(5000, ()=> console.log('http://localhost:5000'));

@@ -39,7 +39,7 @@ export const Register = async(req, res) => {
             password: hashPassword,
             role: "member"
         });
-        res.json({msg: "Register Berhasil"});
+        res.json({message: "Register Berhasil"});
     } catch (error) {
         console.log(error);
     }
@@ -53,7 +53,7 @@ export const Login = async(req, res) => {
             }
         });
         const match = await bcrypt.compare(req.body.password, user[0].password);
-        if(!match) return res.status(400).json({msg: "Wrong Password"});
+        if(!match) return res.status(400).json({message: "Wrong Password"});
         const userId = user[0].id;
         const name = user[0].name;
         const email = user[0].email;
@@ -95,7 +95,7 @@ export const Login = async(req, res) => {
             data: data,
         });
     } catch (error) {
-        res.status(404).json({msg:"Email tidak ditemukan"});
+        res.status(404).json({message:"Email tidak ditemukan"});
     }
 }
 export const Whoami = async (req, res) => {
@@ -123,7 +123,7 @@ export const Update = async(req, res,next) => {
   //   });
   //   return;
   // }
-  if(req.files === null) return res.status(400).json({msg: "No File Uploaded"});
+  if(req.files === null) return res.status(400).json({message: "No File Uploaded"});
   const users = await Users.findOne({
     where: {
         id: req.user.userId
@@ -170,24 +170,24 @@ export const Update = async(req, res,next) => {
 
     const allowedType = ['.png','.jpg','.jpeg'];
 
-    if(!allowedType.includes(ext.toLowerCase())) return res.status(422).json({msg: "Invalid Images"});
-    if(!allowedType.includes(extVisa.toLowerCase())) return res.status(422).json({msg: "Invalid Images"});
-    if(!allowedType.includes(extPassport.toLowerCase())) return res.status(422).json({msg: "Invalid Images"});
-    if(!allowedType.includes(extIzin.toLowerCase())) return res.status(422).json({msg: "Invalid Images"});
+    if(!allowedType.includes(ext.toLowerCase())) return res.status(422).json({message: "Invalid Images"});
+    if(!allowedType.includes(extVisa.toLowerCase())) return res.status(422).json({message: "Invalid Images"});
+    if(!allowedType.includes(extPassport.toLowerCase())) return res.status(422).json({message: "Invalid Images"});
+    if(!allowedType.includes(extIzin.toLowerCase())) return res.status(422).json({message: "Invalid Images"});
 
-    if(fileSize > 1000000 || fileSizeVisa > 1000000 || fileSizePassport > 1000000 || fileSizeIzin > 1000000) return res.status(422).json({msg: "Image must be less than 1 MB"});
+    if(fileSize > 1000000 || fileSizeVisa > 1000000 || fileSizePassport > 1000000 || fileSizeIzin > 1000000) return res.status(422).json({message: "Image must be less than 1 MB"});
 
     file.mv(`./public/images/${fileName}`, (err)=>{
-        if(err) return res.status(500).json({msg: err.message});
+        if(err) return res.status(500).json({message: err.message});
     });
     fileVisa.mv(`./public/images/${fileNameVisa}`, (err)=>{
-      if(err) return res.status(500).json({msg: err.message});
+      if(err) return res.status(500).json({message: err.message});
     });
     filePassport.mv(`./public/images/${fileNamePassport}`, (err)=>{
-      if(err) return res.status(500).json({msg: err.message});
+      if(err) return res.status(500).json({message: err.message});
     });
     fileIzin.mv(`./public/images/${fileNameIzin}`, (err)=>{
-      if(err) return res.status(500).json({msg: err.message});
+      if(err) return res.status(500).json({message: err.message});
     });
   }
   const url = `${req.protocol}://${req.get("host")}/images/${fileName}`;
@@ -209,7 +209,7 @@ export const Update = async(req, res,next) => {
       }
       
   });
-  res.status(200).json({msg: "User Updated"});
+  res.status(200).json({message: "User Updated"});
   } catch (error) {
     console.log(error);
   }return next;
