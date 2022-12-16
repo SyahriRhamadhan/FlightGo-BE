@@ -98,27 +98,27 @@ export const Login = async(req, res) => {
         res.status(404).json({message:"Email tidak ditemukan"});
     }
 }
-// export const Whoami = async (req, res) => {
-//     try {
-//         const users = await Users.findOne({
-//             where:{
-//               id: req.user.userId
-//             },
-//             attributes:['image_user','name','email', 'role','phone','address','visa','passport','izin']
-//         });
-//         res.json(users);
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }
 export const Whoami = async (req, res) => {
-  try {
-    const currentUser = req.user;
-    res.status(200).json(currentUser)
-  } catch (error) {
-    console.log(error)
-  }
+    try {
+        const users = await Users.findOne({
+            where:{
+              id: req.user.userId
+            },
+            attributes:['image_user','name','email', 'role','phone','address','visa','passport','izin']
+        });
+        res.json(users);
+    } catch (error) {
+        console.log(error);
+    }
 }
+// export const Whoami = async (req, res) => {
+//   try {
+//     const currentUser = req.user;
+//     res.status(200).json(currentUser)
+//   } catch (error) {
+//     console.log(error)
+//   }
+// }
 
 //update user
 export const Update = async(req, res,next) => {
