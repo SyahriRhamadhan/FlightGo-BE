@@ -9,13 +9,14 @@ import FileUpload from "express-fileupload";
 dotenv.config();
 const app = express();
  
-app.use(cors({ credentials:true, origin:'http://localhost:3000' }));
+// app.use(cors({ credentials:true, origin:'http://localhost:3000' }));
+app.use(cors({}))
 app.use(cookieParser());
 app.use(express.json());
 app.use(FileUpload());
 app.use(express.static("public"));
 app.use(router);
-(async () => {
-    await db.sync();
-})();
+// (async () => {
+//     await db.sync();
+// })();
 app.listen(process.env.PORT, ()=> console.log(`server is running`))
